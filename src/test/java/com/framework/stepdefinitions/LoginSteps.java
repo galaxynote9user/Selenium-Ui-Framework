@@ -3,7 +3,10 @@ package com.framework.stepdefinitions;
 import com.framework.pages.LoginPage;
 import com.framework.utilities.DriverHelpers;
 import io.cucumber.java.en.*;
+
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Actions;
 
 public class LoginSteps {
     WebDriver driver;
@@ -25,5 +28,7 @@ public class LoginSteps {
     @And("I click the login button")
     public void iClickTheLoginButton() {
         loginPage.clickLogin();
+        Actions s=new Actions(driver);
+        s.sendKeys(Keys.ENTER);
     }
 }

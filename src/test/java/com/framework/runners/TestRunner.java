@@ -6,11 +6,13 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-    features = "src/test/resources/features", // path to the feature files
+    features = "src/test/resources/features",//dryRun=true, // path to the feature files
     glue = {"com.framework.stepdefinitions"}, // path to the step definitions
     plugin = {"pretty", "html:target/cucumber-reports.html", "json:target/cucumber.json"},
-    monochrome = true, // for readable console output
-    tags = "@Login" // optional: use this to specify which tests to run
+   // monochrome = true,// for readable console output
+    		
+    tags = "@Priduct" // optional: use this to specify which tests to run
+  
 )
-public class TestRunner {
+public class TestRunner  {
 }
