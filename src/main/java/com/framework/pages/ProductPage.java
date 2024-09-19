@@ -5,33 +5,51 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 import com.framework.utilities.DriverHelpers;
 
-public class ProductPage {
+import junit.framework.Assert;
+
+public class ProductPage extends BasePage {
 WebDriver driver;
 public ProductPage(WebDriver driver) {
-	this.driver=DriverHelpers.startDriver();
+	super(driver);
+	//this.driver=driver;
 }
- By productName= By.xpath("//div[@class='inventory_item_name ']");
- By Price=By.xpath("(//div[text()='Sauce Labs Bolt T-Shirt']//following::div[@class='inventory_item_price'])[1]");
- By addtoCart=By.xpath("(//div[text()='Sauce Labs Bolt T-Shirt']//following::button[text()='Add to cart'])[1]");
+
+
+ private By productName= By.xpath("//div[@class='inventory_item_name ']");
+ @FindBy(xpath="//div[@class='inventory_item_price']")
+ private WebElement tshirtprice;
+ @FindBy(xpath="(//div[text()='Sauce Labs Bolt T-Shirt']//following::button[text()='Add to cart'])[1]") 
+private WebElement addtocart;		 
  
- 
+
+ @FindBy(xpath="//span[text()='Products']") 
+ private WebElement productHeader;
+ @FindBy(css = "div#shopping_cart_container")
+ private WebElement clickOnCartContainer;
+
  DriverHelpers drihel=new DriverHelpers();
  
  public void selectTheProduct(String productname) {
-	// drihel.selectProduct( productName, productname);
 	 System.out.println(productname);
+//	 String ActualProdName=productHeader.getText();
+//	 System.out.println(ActualProdName);
+	// Assert.assertEquals(ActualProdName, productname);
+	
 	  }
 
 public String getPrice() {
-	return driver.findElement(Price).getText();
+	return tshirtprice.getText();
 }
 public void addtoCartLick() {
-	driver.findElement(addtoCart).click();
+	addtocart.click();
 }
 
-	
+	public void clikeOnCartContainer() {
+		clickOnCartContainer.click();
+	}
 	
 }

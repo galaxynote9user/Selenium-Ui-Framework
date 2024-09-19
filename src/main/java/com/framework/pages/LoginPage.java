@@ -2,27 +2,38 @@ package com.framework.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
-public class LoginPage {
+public class LoginPage extends BasePage{
     WebDriver driver;
 
     public LoginPage(WebDriver driver) {
-        this.driver = driver;
+    	super(driver);
+        //this.driver = driver;
     }
 
-    By username = By.id("user-name");
-    By password = By.id("password");
-    By loginButton = By.id("login-button");
+  //  By username = By.id("user-name");
+    //By password = By.id("password");
+   // By loginButton = By.id("login-button");
+    
+    @FindBy(id ="user-name" )
+    private WebElement username;
+    @FindBy(id ="password" )
+    private WebElement password;
+
+    @FindBy(id ="login-button" )
+    private WebElement loginButton;
 
     public void enterUsername(String user) {
-        driver.findElement(username).sendKeys(user);
+        username.sendKeys(user);
     }
 
     public void enterPassword(String pass) {
-        driver.findElement(password).sendKeys(pass);
+       password.sendKeys(pass);
     }
 
     public void clickLogin() {
-        driver.findElement(loginButton).click();
+        loginButton.click();
     }
 }
