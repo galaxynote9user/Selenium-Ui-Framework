@@ -11,8 +11,10 @@ import org.junit.runner.RunWith;
     plugin = {"pretty", "html:target/cucumber-reports.html", "json:target/cucumber.json"},
    // monochrome = true,// for readable console output
     		
-    tags = "@Priduct" // optional: use this to specify which tests to run
+    tags = "@ProductSort" // optional: use this to specify which tests to run
   
 )
-public class TestRunner  {
+public class TestRunner  
+{
+    
 }
