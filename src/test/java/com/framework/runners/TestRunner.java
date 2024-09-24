@@ -8,7 +8,8 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
     features = "src/test/resources/features",//dryRun=true, // path to the feature files
     glue = {"com.framework.stepdefinitions"}, // path to the step definitions
-    plugin = {"pretty", "html:target/cucumber-reports.html", "json:target/cucumber.json"},
+    plugin = {"pretty", "html:target/cucumber-reports.html", "json:target/cucumber.json",
+                "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"},
    // monochrome = true,// for readable console output
     		
     tags = "@ProductSort" // optional: use this to specify which tests to run

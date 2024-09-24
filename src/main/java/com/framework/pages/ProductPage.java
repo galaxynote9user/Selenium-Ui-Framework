@@ -13,8 +13,11 @@ import io.cucumber.messages.types.Duration;
 import junit.framework.Assert;
 import java.util.List;
 
-public class ProductPage extends BasePage {
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+public class ProductPage extends BasePage {
+  private static final Logger logger = LogManager.getLogger(ProductPage.class);
     public ProductPage(WebDriver driver) {
         super(driver);
     }
@@ -49,6 +52,7 @@ public class ProductPage extends BasePage {
         String ActualProdName = productName.getText();
         System.out.println(ActualProdName);
         Assert.assertEquals(ActualProdName.toLowerCase(), productname.toLowerCase());
+        logger.info("Product Actual name and fetched names are same");
     }
 
     public String getPrice() {
@@ -59,6 +63,7 @@ public class ProductPage extends BasePage {
     public void addtoCartClick() {
         waitForElementToBeVisible(addtocart);
         addtocart.click();
+        logger.info("Added Product to cart");
     }
 
     public void clickOnCartContainer() {
@@ -70,6 +75,7 @@ public class ProductPage extends BasePage {
     {
         waitForElementToBeClickable(sortDropdown);
         System.out.println("Filter Option is present");
+        logger.info("Filter Option is present");
     }
 
     public void sortByNameAtoZ() {

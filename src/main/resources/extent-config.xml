@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extentreports>
+	<configuration>
+		<theme>dark</theme>
+		<encoding>UTF-8</encoding>
+		<protocol>http</protocol>
+		<documentTitle>Merx API Report</documentTitle>
+		<reportName>Execution Report</reportName>
+		<testViewChartLocation>top</testViewChartLocation>
+		<scripts>
+<![CDATA[
+$(document).ready(function() {
+});
+]]>
+		</scripts>
+		<!-- custom styles -->
+		<styles>
+<![CDATA[
+]]>
+		</styles>
+		<reportFolder>Report</reportFolder>
+		<reportFileName>REPORT - {date}</reportFileName>
+		<dateFormat>MM/dd/yyyy-HH:mm:ss</dateFormat>
+	</configuration>
+</extentreports>

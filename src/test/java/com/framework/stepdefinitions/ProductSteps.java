@@ -1,5 +1,8 @@
 package com.framework.stepdefinitions;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.framework.pages.ProductPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -8,7 +11,7 @@ import junit.framework.Assert;
 
 public class ProductSteps{
     ProductPage productPage;
-    
+    private static final Logger logger = LogManager.getLogger(ProductSteps.class);
     @When("Sucesssfilly Login to the Application and navigated to the product pages")
     public void sucesssfilly_login_to_the_application_and_navigated_to_the_product_pages() {
         productPage = new ProductPage(Hooks.driver);
@@ -54,6 +57,7 @@ public class ProductSteps{
         boolean isSorted = productPage.areProductsSortedByName();
         Assert.assertTrue("Products are not sorted by Name A to Z", isSorted);
         System.out.println("Products are sorted in ascending order");
+        logger.info("Products are sorted in ascending order");
     }
 
     @And("I should able to click on descending name sort")
@@ -67,6 +71,6 @@ public class ProductSteps{
     {
         boolean isSorted = productPage.areProductsSortedByNameDesc();
         Assert.assertTrue("Products are not sorted by Name Z to A", isSorted);
-        System.out.println("Products are sorted in descending order");
+        logger.info("Products are sorted in descending order");
     }
 }
