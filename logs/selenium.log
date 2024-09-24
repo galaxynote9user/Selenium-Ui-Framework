@@ -1,7 +1,0 @@
-2024-09-24 12:05:53 INFO  LoginPage:26 - Entering User Name : standard_user
-2024-09-24 12:05:53 INFO  LoginPage:31 - Entering User Password : secret_sauce
-2024-09-24 12:05:53 INFO  LoginPage:36 - Clicked on Login Button
-2024-09-24 12:05:53 INFO  ProductPage:78 - Filter Option is present
-2024-09-24 12:05:54 INFO  ProductSteps:60 - Products are sorted in ascending order
-2024-09-24 12:05:54 INFO  ProductPage:78 - Filter Option is present
-2024-09-24 12:05:55 INFO  ProductSteps:74 - Products are sorted in descending order
