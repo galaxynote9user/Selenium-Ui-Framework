@@ -1,0 +1,46 @@
+version: 2.1
+
+executors:
+  maven-executor:
+    docker:
+      - image: circleci/openjdk:20-jdk
+    working_directory: ~/repo
+
+jobs:
+  build:
+    executor: maven-executor
+    steps:
+      - checkout
+      - run:
+          name: Install Maven
+          command: sudo apt-get update && sudo apt-get install maven -y
+
+      # Cache dependencies to speed up build time
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "pom.xml" }}
+            - v1-dependencies-
+      - run:
+          name: Run Maven Tests
+          command: mvn clean test
+
+      # Save the maven cache
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: v1-dependencies-{{ checksum "pom.xml" }}
+
+      # Archive Extent Reports
+      - store_artifacts:
+          path: target/ExtentReport.html
+          destination: ExtentReport.html
+
+      # Archive Test Results (for CircleCI Test Insights)
+      - store_test_results:
+          path: Report/
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - build
