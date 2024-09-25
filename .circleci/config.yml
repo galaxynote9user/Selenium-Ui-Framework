@@ -16,9 +16,7 @@ jobs:
       - checkout
 
       # Install Maven
-      - run:
-          name: Install Maven
-          command: sudo apt-get update && sudo apt-get install maven -y
+      - run: mvn dependency:go-offline
 
       # Install latest version of Chrome
       - run:
