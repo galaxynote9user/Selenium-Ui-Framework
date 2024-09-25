@@ -32,8 +32,8 @@ jobs:
 
       # Archive Extent Reports
       - store_artifacts:
-          path: target/ExtentReport.html
-          destination: ExtentReport.html
+          path: Report/ExtenthtmlReport.html
+          destination: ExtenthtmlReport.html
 
       # Archive Test Results (for CircleCI Test Insights)
       - store_test_results:
