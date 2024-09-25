@@ -1,68 +1,50 @@
 version: 2.1
 
 executors:
-  maven-executor:
+  ubuntu-executor:
     docker:
-      - image: cimg/openjdk:21.0.2
+      - image: cimg/base:2024.09
     working_directory: ~/repo
-    environment:
-      # Customize the JVM maximum heap limit
-      MAVEN_OPTS: -Xmx3200m
 
 jobs:
   build:
-    executor: maven-executor
+    executor: ubuntu-executor
     steps:
       - checkout
-
-      # Install Maven
-      - run: mvn dependency:go-offline
-
-      # Install Chrome and Chromedriver
+      
+      # Install dependencies
       - run:
-          name: Install latest version of Chrome
+          name: Install Java, Maven, and other dependencies
           command: |
-            sudo wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-            sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
             sudo apt-get update
-            sudo apt-get -y install google-chrome-stable
+            sudo apt-get install -y openjdk-21-jdk maven wget unzip xvfb google-chrome-stable
 
+      # Download and set up ChromeDriver
       - run:
-          name: Install correct version of ChromeDriver
+          name: Install ChromeDriver
           command: |
-            # Fetch Chrome version
-            CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+\.\d+' | head -n1 | cut -d. -f1)
-            # Fetch ChromeDriver version
-            CHROMEDRIVER_VERSION=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
-            # Download and install ChromeDriver
-            wget -N https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
-            unzip chromedriver_linux64.zip -d /usr/local/bin/
+            CHROME_VERSION=$(google-chrome --version | awk '{print $3}' | cut -d'.' -f1)
+            wget -N https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION -O chromedriver.zip
+            unzip chromedriver.zip -d /usr/local/bin/
+            rm chromedriver.zip
             sudo chmod +x /usr/local/bin/chromedriver
-
-      - run:
-          name: Install Xvfb and other dependencies
-          command: |
-            sudo apt-get install libxi6 libgconf-2-4 -y
-            sudo apt-get -y install xvfb gtk2-engines-pixbuf
-            sudo apt-get -y install xfonts-cyrillic xfonts-100dpi xfonts-75dpi xfonts-base xfonts-scalable
-            sudo apt-get install imagemagick x11-apps -y
-
-      - run:
-          name: Start Xvfb
-          command: |
-            Xvfb :0 -ac &
-            export DISPLAY=:0
+            chromedriver --version
 
       # Cache dependencies to speed up build time
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "pom.xml" }}
             - v1-dependencies-
+
+      # Run tests
       - run:
           name: Run Maven Tests
-          command: mvn clean test
+          command: |
+            Xvfb :0 -ac &
+            export DISPLAY=:99
+            mvn clean test
 
-      # Save Maven cache
+      # Save the maven cache
       - save_cache:
           paths:
             - ~/.m2
@@ -75,7 +57,7 @@ jobs:
 
       # Archive Test Results (for CircleCI Test Insights)
       - store_test_results:
-          path: target/surefire-reports
+          path: Report/
 
 workflows:
   version: 2
