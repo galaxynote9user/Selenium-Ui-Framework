@@ -18,7 +18,7 @@ jobs:
       # Install Maven
       - run: mvn dependency:go-offline
 
-      # Install latest version of Chrome
+      # Install Chrome and Chromedriver
       - run:
           name: Install latest version of Chrome
           command: |
@@ -27,23 +27,29 @@ jobs:
             sudo apt-get update
             sudo apt-get -y install google-chrome-stable
 
-      # Install ChromeDriver
       - run:
-          name: Install ChromeDriver and Xvfb for headless testing
+          name: Install correct version of ChromeDriver
           command: |
-            sudo apt-get install -y unzip xvfb
-            wget -N https://chromedriver.storage.googleapis.com/`curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE`/chromedriver_linux64.zip -P ~/
-            unzip ~/chromedriver_linux64.zip -d ~/
-            sudo mv -f ~/chromedriver /usr/local/bin/chromedriver
-            sudo chmod 755 /usr/local/bin/chromedriver
+            CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+\.\d+')
+            CHROMEDRIVER_VERSION=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
+            wget -N https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
+            unzip chromedriver_linux64.zip -d /usr/local/bin/
+            sudo chmod +x /usr/local/bin/chromedriver
 
-      # Run tests using Xvfb (for headless mode)
       - run:
-          name: Test Setup
+          name: Install Xvfb and other dependencies
+          command: |
+            sudo apt-get install libxi6 libgconf-2-4 -y
+            sudo apt-get -y install xvfb gtk2-engines-pixbuf
+            sudo apt-get -y install xfonts-cyrillic xfonts-100dpi xfonts-75dpi xfonts-base xfonts-scalable
+            sudo apt-get install imagemagick x11-apps -y
+
+      - run:
+          name: Start Xvfb
           command: |
             Xvfb :0 -ac &
-            export DISPLAY=:99
-
+            export DISPLAY=:0
+            
       # Cache dependencies to speed up build time
       - restore_cache:
           keys:
