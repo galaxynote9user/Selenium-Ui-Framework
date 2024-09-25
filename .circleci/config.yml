@@ -5,26 +5,59 @@ executors:
     docker:
       - image: cimg/openjdk:21.0.2
     working_directory: ~/repo
+    environment:
+      # Customize the JVM maximum heap limit
+      MAVEN_OPTS: -Xmx3200m
 
 jobs:
   build:
     executor: maven-executor
     steps:
       - checkout
+
+      # Install Maven
       - run:
           name: Install Maven
           command: sudo apt-get update && sudo apt-get install maven -y
+
+      # Install latest version of Chrome
+      - run:
+          name: Install latest version of Chrome
+          command: |
+            sudo wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+            sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+            sudo apt-get update
+            sudo apt-get -y install google-chrome-stable
+
+      # Install ChromeDriver
+      - run:
+          name: Install ChromeDriver and Xvfb for headless testing
+          command: |
+            sudo apt-get install -y unzip xvfb
+            wget -N https://chromedriver.storage.googleapis.com/`curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE`/chromedriver_linux64.zip -P ~/
+            unzip ~/chromedriver_linux64.zip -d ~/
+            sudo mv -f ~/chromedriver /usr/local/bin/chromedriver
+            sudo chmod 755 /usr/local/bin/chromedriver
+
+      # Run tests using Xvfb (for headless mode)
+      - run:
+          name: Test Setup
+          command: |
+            Xvfb :0 -ac &
+            export DISPLAY=:99
 
       # Cache dependencies to speed up build time
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "pom.xml" }}
             - v1-dependencies-
+
+      # Run Maven Tests
       - run:
           name: Run Maven Tests
           command: mvn clean test
 
-      # Save the maven cache
+      # Save Maven cache
       - save_cache:
           paths:
             - ~/.m2
@@ -37,7 +70,7 @@ jobs:
 
       # Archive Test Results (for CircleCI Test Insights)
       - store_test_results:
-          path: Report/
+          path: target/surefire-reports
 
 workflows:
   version: 2
