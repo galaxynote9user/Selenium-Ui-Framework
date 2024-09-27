@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
                 "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"},
    // monochrome = true,// for readable console output
     		
-    tags = "@ProductSort" // optional: use this to specify which tests to run
+    tags = "@Invalidlogin" // optional: use this to specify which tests to run
   
 )
 public class TestRunner  
