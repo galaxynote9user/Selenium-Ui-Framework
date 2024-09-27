@@ -2,7 +2,7 @@ pipeline {
     agent any
     tools {
         maven 'Maven 3.9.9'   // Make sure to configure this in Jenkins
-        jdk 'JDK 18'        // Choose the appropriate JDK
+        jdk 'JDK 18'        
     }
     stages {
         stage('Checkout') {
