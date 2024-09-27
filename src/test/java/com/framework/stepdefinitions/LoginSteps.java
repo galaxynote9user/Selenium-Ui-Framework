@@ -32,7 +32,7 @@ public class LoginSteps {
     
     @When("I enter valid username {string} and invalidpassword {string}")
     public void i_enter_valid_username_and_invalidpassword(String string, String string2) throws IOException {{
-    	XSSFSheet sheet = ExcelReader.readExcelData("./src/test/resources/testdata/testdata.xlsxtestdata.xlsx", "Sheet1");
+    	XSSFSheet sheet = ExcelReader.readExcelData("src/test/resources/testdata/testdata.xlsx", "Sheet1");
         int rowCount = sheet.getLastRowNum();
 
         for (int i = 1; i <= rowCount; i++) {
