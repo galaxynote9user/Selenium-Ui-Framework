@@ -2,23 +2,19 @@ package com.framework.stepdefinitions;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.WebDriver;
 
 import com.framework.pages.ProductPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import junit.framework.Assert;
-import com.framework.drivers.DriverManager;
 
 public class ProductSteps{
     ProductPage productPage;
-    private WebDriver driver;
-    
     private static final Logger logger = LogManager.getLogger(ProductSteps.class);
     @When("Sucesssfilly Login to the Application and navigated to the product pages")
     public void sucesssfilly_login_to_the_application_and_navigated_to_the_product_pages() {
-        productPage = new ProductPage(driver);
+        productPage = new ProductPage(Hooks.driver);
     }
     
     @And("Select a product {string}")

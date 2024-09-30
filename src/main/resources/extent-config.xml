@@ -4,7 +4,7 @@
 		<theme>dark</theme>
 		<encoding>UTF-8</encoding>
 		<protocol>http</protocol>
-		<documentTitle>HTML Report</documentTitle>
+		<documentTitle>Merx API Report</documentTitle>
 		<reportName>Execution Report</reportName>
 		<testViewChartLocation>top</testViewChartLocation>
 		<scripts>

@@ -7,7 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-//import com.framework.utilities.DriverHelpers;
+import com.framework.utilities.DriverHelpers;
 import java.util.stream.Collectors;
 import io.cucumber.messages.types.Duration;
 import junit.framework.Assert;
@@ -43,7 +43,7 @@ public class ProductPage extends BasePage {
     @FindBy(css = ".inventory_item_name")
     private List<WebElement> productNames;
 
-    //DriverHelpers drihel = new DriverHelpers();
+    DriverHelpers drihel = new DriverHelpers();
 
     public void selectTheProduct(String productname) {
         waitForElementToBeVisible(productHeader);

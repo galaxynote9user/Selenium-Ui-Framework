@@ -1,4 +1,4 @@
-@Product @regression
+@Product
 Feature: Product Details Page
 
 Background: Pre-requesite
