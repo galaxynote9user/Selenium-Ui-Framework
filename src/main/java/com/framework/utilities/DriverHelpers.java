@@ -1,9 +1,6 @@
 package com.framework.utilities;
 
-import java.util.List;
-
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 import com.framework.drivers.DriverManager;
 

@@ -43,7 +43,9 @@ public class ProductPage extends BasePage {
     @FindBy(css = ".inventory_item_name")
     private List<WebElement> productNames;
 
-    DriverHelpers drihel = new DriverHelpers();
+    @FindBy(xpath="//button[@id='checkout']")
+    private WebElement checkout;
+
 
     public void selectTheProduct(String productname) {
         waitForElementToBeVisible(productHeader);
@@ -109,4 +111,71 @@ public class ProductPage extends BasePage {
                                         .collect(Collectors.toList());
         return names.equals(sortedNames);
     }
+
+    public void clickonCheckOut() {
+        checkout.click();
+    }
+
+    @FindBy(id = "first-name")
+    private WebElement firstName;
+
+    @FindBy(id = "last-name")
+    private WebElement lastName;
+
+    @FindBy(id = "postal-code")
+    private WebElement postalCode;
+
+    public void enterDetails(String firstname, String lastname, String postalcode) {
+        waitForElementToBeVisible(firstName);
+        firstName.sendKeys(firstname);
+        lastName.sendKeys(lastname);
+        postalCode.sendKeys(postalcode);
+    }
+
+
+    @FindBy(xpath = "//input[@id='continue']")
+    private WebElement continueButton;
+
+    public void clickonContinue() {
+        continueButton.click();
+    }
+
+    @FindBy(xpath = "//div[@data-test='inventory-item-desc']")
+    private WebElement productPageDesc;
+
+    @FindBy(xpath = "//div[@data-test='inventory-item-name']")
+    private WebElement productPageName;
+
+    @FindBy(xpath = "//div[@data-test='inventory-item-price']")
+    private WebElement productPagePrice;
+
+    public String getProductPrice() {
+        return productPagePrice.getText();
+    }
+
+    public String getProductName() {
+        return productPageName.getText();
+    }
+
+    public String getProductDesc() {
+        return productPageDesc.getText();
+    }
+
+    @FindBy(xpath = "//button[@id='finish']")
+    private WebElement finishButton;
+
+    public void clickOnFinishButton() {
+        finishButton.click();
+    }
+
+    @FindBy(xpath = "//h2[@class='complete-header']")
+    private WebElement completeHeader;
+
+    public void checkProductPlacedMessage() {
+        waitForElementToBeVisible(completeHeader);
+        String actualMessage = completeHeader.getText();
+        Assert.assertEquals("Thank you for your order!", actualMessage);
+
+    }
+
 }

@@ -9,10 +9,14 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import junit.framework.Assert;
 
+
 public class ProductSteps{
+
     ProductPage productPage;
+    public static String productprice, productname, productdesc;
     private static final Logger logger = LogManager.getLogger(ProductSteps.class);
-    @When("Sucesssfilly Login to the Application and navigated to the product pages")
+
+    @When("Successfully Login to the Application and navigated to the product pages")
     public void sucesssfilly_login_to_the_application_and_navigated_to_the_product_pages() {
         productPage = new ProductPage(Hooks.driver);
     }
@@ -73,4 +77,60 @@ public class ProductSteps{
         Assert.assertTrue("Products are not sorted by Name Z to A", isSorted);
         logger.info("Products are sorted in descending order");
     }
+
+
+
+    @Then("I capture the product details")
+    public void iCaptureTheProductDetails()
+    {
+        productprice = productPage.getProductPrice();
+        productname = productPage.getProductName();
+        productdesc = productPage.getProductDesc();
+        logger.info("Product details captured");
+    }
+
+    @And("I click on checkout button")
+    public void iClickOnCheckoutButton() {
+        productPage.clickonCheckOut();
+        logger.info("Clicked on checkout button");
+    }
+
+    @And("I enter the details {string} {string} {string}")
+    public void iEnterTheDetails(String firstname, String lastname, String zipcode)
+    {
+         productPage.enterDetails(firstname, lastname, zipcode);
+         logger.info("Entered basic details");
+    }
+
+    @And("I click on continue button")
+    public void iClickOnContinueButton()
+    {
+        productPage.clickonContinue();
+    }
+
+    @And("I verify the product details in the checkout page")
+    public void iVerifyTheProductDetailsInTheCheckoutPage()
+    {
+        String productprice_checkout = productPage.getProductPrice();
+        String productname_checkout = productPage.getProductName();
+        String productdesc_checkout = productPage.getProductDesc();
+        Assert.assertEquals(productprice, productprice_checkout);
+        Assert.assertEquals(productname, productname_checkout);
+        Assert.assertEquals(productdesc, productdesc_checkout);
+        logger.info("Product details verified in checkout page");
+    }
+
+    @And("I click on finish button")
+    public void iClickOnFinishButton()
+    {
+        productPage.clickOnFinishButton();
+    }
+
+    @Then("I should able to see the order confirmation page")
+    public void iShouldAbleToSeeTheOrderConfirmationPage()
+    {
+        productPage.checkProductPlacedMessage();
+        logger.info("Order confirmation page displayed");
+    }
+
 }
