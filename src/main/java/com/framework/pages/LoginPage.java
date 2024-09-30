@@ -21,6 +21,9 @@ public class LoginPage extends BasePage{
     @FindBy(id ="login-button" )
     private WebElement loginButton;
 
+    @FindBy(xpath = "//*[@id=\"login_button_container\"]/div/form/div[3]/h3")
+    private WebElement errorMessage;
+
     public void enterUsername(String user) {
         username.sendKeys(user);
         logger.info("Entering User Name : "+user);
@@ -34,5 +37,18 @@ public class LoginPage extends BasePage{
     public void clickLogin() {
         loginButton.click();
         logger.info("Clicked on Login Button");
+    }
+
+    public void verifyErrorMessage() {
+        errorMessage.isDisplayed();
+
+        if(errorMessage.isDisplayed())
+        {
+            logger.info("Error Message is displayed");
+        }
+        else
+        {
+            logger.info("Error Message is not displayed");
+        }
     }
 }
