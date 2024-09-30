@@ -18,12 +18,4 @@ public class DriverHelpers {
         DriverManager.quitDriver();
     }
     
-    public void selectProduct(List<WebElement> productName,String productname) {
-    	for(WebElement product:productName) {
-    		if(product.equals(productname)) {
-    			product.click();
-    			break;
-    		}
-    	}
-    }
 }
