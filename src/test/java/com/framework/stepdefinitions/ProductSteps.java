@@ -145,7 +145,7 @@ public class ProductSteps{
         productPage.checkTwitterPage();
     }
 
-    @And("I click on Facebook link")
+    @Given("I click on Facebook link")
     public void iClickOnFacebookLink()
     {
         productPage.clickOnFacebookLink();
@@ -156,7 +156,7 @@ public class ProductSteps{
         productPage.checkFacebookPage();
     }
 
-    @And("I click on Linkedin link")
+    @Given("I click on Linkedin link")
     public void iClickOnLinkedinLink()
     {
         productPage.clickOnLinkedinLink();
