@@ -42,3 +42,12 @@ Background: Login Page Navigation
         | firstname | lastname | zipcode |
         | John      | Doe      | 12345   |
         | John      | Wick     | 54321   |
+
+      @socialMedia
+      Scenario: Verify Social Media Hyperlinks in Product page
+        Given I click on Twitter link
+        Then I should able to see the Twitter page
+        And I click on Facebook link
+        Then I should able to see the Facebook page
+        And I click on Linkedin link
+        Then I should able to see the Linkedin page

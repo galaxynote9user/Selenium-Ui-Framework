@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
     glue = {"com.framework.stepdefinitions"},
     plugin = {"pretty", "html:target/cucumber-reports.html", "json:target/cucumber.json",
                 "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"},
-    tags = "@OrderProduct"
+    tags = "@socialMedia"
   
 )
 public class TestRunner  

@@ -14,5 +14,18 @@ public class DriverHelpers {
     public static void closeDriver() {
         DriverManager.quitDriver();
     }
-    
+
+    public static String getCurrentUrl() {
+        return DriverManager.getDriver().getCurrentUrl();
+    }
+
+    //close current tab
+    public static void closeCurrentTab() {
+        DriverManager.getDriver().close();
+    }
+
+    //get driver
+    public static WebDriver getDriver() {
+        return DriverManager.getDriver();
+    }
 }

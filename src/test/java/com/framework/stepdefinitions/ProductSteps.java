@@ -1,5 +1,6 @@
 package com.framework.stepdefinitions;
 
+import io.cucumber.java.en.Given;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -133,4 +134,36 @@ public class ProductSteps{
         logger.info("Order confirmation page displayed");
     }
 
+    @Given("I click on Twitter link")
+    public void iClickOnTwitterLink()
+    {
+        productPage.clickOnTwitterLink();
+    }
+
+    @Then("I should able to see the Twitter page")
+    public void iShouldAbleToSeeTheTwitterPage() throws InterruptedException {
+        productPage.checkTwitterPage();
+    }
+
+    @And("I click on Facebook link")
+    public void iClickOnFacebookLink()
+    {
+        productPage.clickOnFacebookLink();
+    }
+
+    @Then("I should able to see the Facebook page")
+    public void iShouldAbleToSeeTheFacebookPage() throws InterruptedException {
+        productPage.checkFacebookPage();
+    }
+
+    @And("I click on Linkedin link")
+    public void iClickOnLinkedinLink()
+    {
+        productPage.clickOnLinkedinLink();
+    }
+
+    @Then("I should able to see the Linkedin page")
+    public void iShouldAbleToSeeTheLinkedinPage() throws InterruptedException {
+        productPage.checkLinkedinPage();
+    }
 }
